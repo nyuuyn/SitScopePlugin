@@ -1,0 +1,229 @@
+{
+    "name": "SituationalScopes",
+    "uri": "http://some-company/schema/bpmn/qa",
+    "prefix": "sitscope",
+    "xml": {
+        "tagAlias": "lowerCase"
+    },
+    "types": [ 
+        {
+            "name": "SituationalScope",
+            "extends": [
+                "bpmn:SubProcess"
+              ],
+            "properties": [
+                {
+                    "name": "situationscopename",
+                    "isAttr": true,
+                    "type": "String"
+                },
+                {
+                    "name": "isDefault",
+                    "type": "Boolean",
+                    "isAttr": true
+
+                },
+                {
+                    "name": "situations",
+                    "type": "Situation",
+                    "isMany": true
+                },
+                {
+                    "name": "choreographyRef",
+                    "type": "Choreography",
+                    "isMany": true,
+                    "isReference": true
+                },
+                {
+                    "name": "entryCondition",
+                    "type": "EntryCondition",
+                    "isAttr": true
+                },
+                {
+                    "name": "entryConditionWait",
+                    "isAttr": true,
+                    "type": "Integer"
+                },
+                {
+                    "name": "adaptCondition",
+                    "type": "AdaptCondition",
+                    "isAttr": true
+                },
+                {
+                    "name": "runningCompensateCondition",
+                    "type": "RunningCompensateCondition",
+                    "isAttr": true
+                },
+                {
+                    "name": "runningCompensateConditionWait",
+                    "isAttr": true,
+                    "type": "Integer"
+                },
+                {
+                    "name": "continueSituation",
+                    "type": "SituationalScope",
+                    "isAttr": true,
+                    "isReference": true
+                },
+                {
+                    "name": "adaptionStrategy",
+                    "type": "AdaptionStrategy",
+                    "isAttr": true
+                },
+                {
+                    "name": "adaptionSituations",
+                    "type": "adaptionSituations",
+                    "isAttr": true,
+                "isMany": true
+                },
+                {
+                    "name": "executionStrategy",
+                    "type": "ExecutionStrategy",
+                    "isAttr": true
+                },
+                {
+                    "name": "executionStrategyDefinition",
+                    "isAttr": true,
+                    "type": "Integer"
+                },
+                {
+                    "name": "executionType",
+                    "type": "ExecutionType",
+                    "isAttr": true
+                }
+            ]
+        },
+        {
+            "name": "AdaptionSituations",
+            "superClass": [
+                "bpmn:BaseElement"
+            ],
+            "properties": [
+                {
+                    "name": "id",
+                    "type": "String",
+                    "isAttr": true
+                },
+                {
+                    "name": "continueSituation",
+                    "type": "SituationalScope",
+                    "isAttr": true,
+                    "isReference": true
+                }
+            ]
+        },
+        {
+            "name": "Situation",
+            "superClass": [
+                "bpmn:BaseElement"
+            ],
+            "properties": [
+                {
+                    "name": "situationname",
+                    "type": "String",
+                    "isAttr": true
+                },
+                {
+                    "name": "situationtrigger",
+                    "type": "Boolean",
+                    "isAttr": true
+                }
+            ]
+        }
+    ],
+    "enumerations": [
+        {
+            "name": "EntryCondition",
+            "literalValues": [
+                {
+                    "name": "WaitAbort"
+                },
+                {
+                    "name": "Abort"
+                },
+                {
+                    "name": "WaitAdapt"
+                },
+                {
+                    "name": "Adapt"
+                },
+                {
+                    "name": "WaitReturn"
+                },
+                {
+                    "name": "Return"
+                }
+            ]
+        },
+        {
+            "name": "AdaptCondition",
+            "literalValues": [
+                {
+                    "name": "Adaption"
+                },
+                {
+                    "name": "Abort"
+                },
+                {
+                    "name": "Retry"
+                },
+                {
+                    "name": "Continue"
+                }
+            ]
+        },
+        {
+            "name": "RunningCompensateCondition",
+            "literalValues": [
+                {
+                    "name": "WaitReturn"
+                },
+                {
+                    "name": "WaitAdapt"
+                },
+                {
+                    "name": "Return"
+                },
+                {
+                    "name": "Adapt"
+                }
+            ]
+        },
+        {
+            "name": "AdaptionStrategy",
+            "literalValues": [
+                {
+                    "name": "BestFit"
+                },
+                {
+                    "name": "AllFit"
+                }
+            ]
+        },
+        {
+            "name": "ExecutionStrategy",
+            "literalValues": [
+                {
+                    "name": "One"
+                },
+                {
+                    "name": "x out of y"
+                },
+                {
+                    "name": "All"
+                }
+            ]
+        },
+        {
+            "name": "ExecutionType",
+            "literalValues": [
+                {
+                    "name": "Parallel"
+                },
+                {
+                    "name": "Sequential"
+                }
+            ]
+        }
+    ] 
+}
