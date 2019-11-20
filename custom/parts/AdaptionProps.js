@@ -28,22 +28,18 @@ export default function(group, element, bpmnFactory,moddle) {
     group.entries.push(entryFactory.table({
         id: 'appendedSituations',
         modelProperties: [ 'situationscopename', 'isDefault' ],
-        labels: [ 'SituationScopeName', 'Default Situation' ],
+        labels: [ 'Appended Scopes', 'Is Default' ],
     
         getElements: function(element, node) {
           var bo = getBusinessObject(element);
-          console.log(bo);
             var allelements=[];
-            console.log(!isNil(bo.outgoing));
             if(!isNil(bo.outgoing)){
                 for(var i=0;i<bo.outgoing.length;i++){
                     var newelement={
                     situationscopename:bo.outgoing[i].targetRef.situationscopename,
                     isDefault:bo.outgoing[i].targetRef.isDefault
                     };
-                    console.log(newelement.isDefault=bo.outgoing[i].targetRef.isDefault);
 
-                    console.log(newelement.situationscopename=bo.outgoing[i].targetRef.situationscopename);
 
                     allelements.push(newelement);
                 }

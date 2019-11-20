@@ -13,7 +13,6 @@ export default class CustomContextPad {
     if (config.autoPlace !== false) {
       this.autoPlace = injector.get('autoPlace', false);
     }
-    //contextPad._providers=[];
     contextPad.registerProvider(this);
   }
 
@@ -32,7 +31,6 @@ export default class CustomContextPad {
         if (autoPlace) {
           const businessObject = bpmnFactory.create('bpmn:SubProcess');
           businessObject.situationscopename="Test";
-          //businessObject.suitable = suitabilityScore;
           businessObject.situations=[];
           businessObject.isDefault=false;
           var situation =moddle.create('sitscope:Situation', {
@@ -41,8 +39,6 @@ export default class CustomContextPad {
                     });
   
           businessObject.situations.push(situation);
-          //businessObject.situation.situationname="CoffeeMachine available";
-          //businessObject.situation.situationtrigger=true;
           const shape = elementFactory.createShape({
             type: 'bpmn:SubProcess',
             isExpanded: true,
@@ -60,7 +56,6 @@ export default class CustomContextPad {
       return function(event) {
         const businessObject = bpmnFactory.create('bpmn:SubProcess');
         businessObject.situationscopename="Test";
-        //businessObject.suitable = suitabilityScore;
         businessObject.situations=[];
         businessObject.isDefault=false;
         var situation =moddle.create('sitscope:Situation', {
@@ -69,8 +64,6 @@ export default class CustomContextPad {
                   });
 
         businessObject.situations.push(situation);
-        //businessObject.situation.situationname="CoffeeMachine available";
-        //businessObject.situation.situationtrigger=true;
         const shape = elementFactory.createShape({
           type: 'bpmn:SubProcess',
           isExpanded: true,
@@ -83,7 +76,7 @@ export default class CustomContextPad {
     return {
       'append.high-task': {
         group: 'model',
-        className: 'bpmn-icon-task',
+        className: 'bpmn-icon-task green',
         title: translate('Append Situational Scope'),
         action: {
           click: appendServiceTask(),

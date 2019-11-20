@@ -89,7 +89,7 @@ export default function(group, element, bpmnFactory,moddle) {
                   });
         return cmdHelper.addElementsTolist(element, bo, 'situations', [ newEntry ]);
       },
-  
+
       removeElement: function(element, node, idx) {
         var bo = getBusinessObject(element);
         return cmdHelper.removeElementsFromList(element, bo, 'situations', null, [ bo.situations[idx] ]);

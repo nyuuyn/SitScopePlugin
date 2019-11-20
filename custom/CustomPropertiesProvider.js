@@ -10,7 +10,7 @@ import linkProps from 'bpmn-js-properties-panel/lib/provider/bpmn/parts/LinkProp
 import documentationProps from 'bpmn-js-properties-panel/lib/provider/bpmn/parts/DocumentationProps';
 import idProps from 'bpmn-js-properties-panel/lib/provider/bpmn/parts/IdProps';
 import nameProps from 'bpmn-js-properties-panel/lib/provider/bpmn/parts/NameProps';
-import test from './parts/SituationalScopeProps';
+import situationscopetab from './parts/SituationalScopeProps';
 import test2 from './parts/AdaptionProps';
 
 function createGeneralTabGroups(element, bpmnFactory, canvas, elementRegistry, translate) {
@@ -47,35 +47,35 @@ function createGeneralTabGroups(element, bpmnFactory, canvas, elementRegistry, t
     ];
   }
   
-  // Create the custom magic tab
-  function createMagicTabGroups(element,bpmnFactory,moddle) {
+  // Create the custom situation tab
+  function createSituationTabGroups(element,bpmnFactory,moddle) {
   
-    // Create a group called "Black Magic".
-    var blackMagicGroup = {
+    // Create a group called "Situational Scope".
+    var situationScopeGroup = {
       id: 'situational-scope',
       label: 'Situational Scope',
       entries: []
     };
   
-    // Add the spell props to the black magic group.
-    test(blackMagicGroup, element,bpmnFactory,moddle);
+    // Add the situation props to the sit scope group.
+    situationscopetab(situationScopeGroup, element,bpmnFactory,moddle);
   
     return [
-      blackMagicGroup
+      situationScopeGroup
     ];
   }
 
-  // Create the custom magic tab
+  // Create the custom adaption tab
   function createAdaptionTabGroups(element,bpmnFactory,moddle) {
   
-    // Create a group called "Black Magic".
+    // Create a group called "Adaption Scope".
     var adaptionMagicGroup = {
       id: 'adaption-scope',
       label: 'Adaption Scope',
       entries: []
     };
   
-    // Add the spell props to the black magic group.
+    // Add the adaption props to the adaption scope group.
     test2(adaptionMagicGroup, element,bpmnFactory,moddle);
   
     return [
@@ -95,11 +95,11 @@ elementRegistry, translate, moddle){
         groups: createGeneralTabGroups(element, bpmnFactory, canvas, elementRegistry, translate)
       };
   
-      // The "magic" tab
-      var magicTab = {
+      // The "Situation" tab
+      var sitTab = {
         id: 'situationproperties',
         label: 'Situation Properties',
-        groups: createMagicTabGroups(element,bpmnFactory,moddle)
+        groups: createSituationTabGroups(element,bpmnFactory,moddle)
       };
 
       var adaptionTab = {
@@ -108,10 +108,10 @@ elementRegistry, translate, moddle){
         groups: createAdaptionTabGroups(element,bpmnFactory,moddle)
       };
   
-      // Show general + "magic" tab
+      // Show general + "Sit" tab
       return [
         generalTab,
-        magicTab,
+        sitTab,
         adaptionTab
       ];
     };

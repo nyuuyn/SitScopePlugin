@@ -8,7 +8,13 @@ import {
 } from 'tiny-svg';
 
 import {
-  getRoundRectPath
+  assign
+  
+} from 'min-dash';
+
+import {
+  getRoundRectPath,
+  getStrokeColor
 } from 'bpmn-js/lib/draw/BpmnRenderUtil';
 
 import {
@@ -26,12 +32,14 @@ const HIGH_PRIORITY = 1500,
 
 
 export default class CustomRenderer extends BaseRenderer {
-  constructor(eventBus, bpmnRenderer) {
+  constructor(config,eventBus, bpmnRenderer, textRenderer) {
     super(eventBus, HIGH_PRIORITY);
-
+    this.defaultFillColor = config && config.defaultFillColor;
+    this.defaultStrokeColor = config && config.defaultStrokeColor;
     this.bpmnRenderer = bpmnRenderer;
+    this.textRenderer=textRenderer;
   }
-
+  
   canRender(element) {
 
     // ignore labels
@@ -40,13 +48,13 @@ export default class CustomRenderer extends BaseRenderer {
 
   drawShape(parentNode, element) {
     const shape = this.bpmnRenderer.drawShape(parentNode, element);
-    const suitabilityScore = this.getSuitabilityScore(element);
+    const suitabilityScore = this.getSituations(element);
     if(!isNil(suitabilityScore)){
       for (var i = 0; i < suitabilityScore.length; i++) {
         const color =this.getColor(suitabilityScore[i]);
   
         const rect = drawRect(parentNode, 100, 20, TASK_BORDER_RADIUS, color);
-      var transformstring='translate(-20,'+(-10+(i*20))+')';
+        var transformstring='translate(-20,'+(-10+(i*20))+')';
         svgAttr(rect, {
           transform: transformstring
         });
@@ -58,9 +66,9 @@ export default class CustomRenderer extends BaseRenderer {
           fill: '#fff',
           transform: transformstring2
         });
-  
         svgClasses(text).add('djs-label'); 
-      
+        this.renderEmbeddedLabel(parentNode, element, true ? 'center-top' : 'center-middle');
+
         svgAppend(text, document.createTextNode(suitabilityScore[i].situationname)); 
       
         svgAppend(parentNode, text);
@@ -81,7 +89,8 @@ export default class CustomRenderer extends BaseRenderer {
     return this.bpmnRenderer.getShapePath(shape);
   }
 
-  getSuitabilityScore(element) {
+  getSituations(element) {
+
     const businessObject = getBusinessObject(element);
   
     const { situations } = businessObject;
@@ -91,7 +100,6 @@ export default class CustomRenderer extends BaseRenderer {
 
   getColor(suitabilityScore) {
     if (suitabilityScore.situationtrigger=="true") {
-      console.log("update");
       return COLOR_GREEN;
     }else{
       return COLOR_RED;
@@ -99,9 +107,45 @@ export default class CustomRenderer extends BaseRenderer {
     }
 
   }
+
+  renderLabel(parentGfx, label, options) {
+    options = assign({
+      size: {
+        width: 100
+      }
+    }, options);
+  
+    var text = this.textRenderer.createText(label || '', options);
+  
+    svgClasses(text).add('djs-label');
+  
+    svgAppend(parentGfx, text);
+  
+    return text;
+  }
+  
+  renderEmbeddedLabel(parentGfx, element, align) {
+
+    var semantic = getBusinessObject(element);
+    return this.renderLabel(parentGfx, element.name, {
+      box: element,
+      align: align,
+      padding: 5,
+      style: {
+        fill: getStrokeColor(element, this.defaultStrokeColor)
+      }
+    });
+  }
+  
+    
+
+
+
+
 }
 
-CustomRenderer.$inject = [ 'eventBus', 'bpmnRenderer' ];
+CustomRenderer.$inject = [ 'config',
+ 'eventBus', 'bpmnRenderer', 'textRenderer' ];
 
 // helpers //////////
 

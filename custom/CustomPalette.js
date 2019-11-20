@@ -27,7 +27,6 @@ export default class CustomPalette {
       return function(event) {
         const businessObject = bpmnFactory.create('bpmn:SubProcess');
         businessObject.situationscopename="Test";
-        //businessObject.suitable = suitabilityScore;
         businessObject.situations=[];
         businessObject.isDefault=false;
         var situation =moddle.create('sitscope:Situation', {
@@ -36,8 +35,6 @@ export default class CustomPalette {
                   });
 
         businessObject.situations.push(situation);
-        //businessObject.situation.situationname="CoffeeMachine available";
-        //businessObject.situation.situationtrigger=true;
         const shape = elementFactory.createShape({
           type: 'bpmn:SubProcess',
           isExpanded: true,
@@ -50,7 +47,7 @@ export default class CustomPalette {
     return {
       'create.high-task': {
         group: 'activity',
-        className: 'bpmn-icon-task',
+        className: 'bpmn-icon-task green',
         title: translate('Create Situational Scope'),
         action: {
           dragstart: createTask(),
