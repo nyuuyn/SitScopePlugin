@@ -30,7 +30,9 @@ export default class CustomContextPad {
       return function(event, element) {
         if (autoPlace) {
           const businessObject = bpmnFactory.create('bpmn:SubProcess');
-          businessObject.situationscopename="Test";
+          businessObject.id=businessObject.id.replace('SubProcess', 'SituationScope');
+
+          businessObject.name="Test";
           businessObject.situations=[];
           businessObject.isDefault=false;
           var situation =moddle.create('sitscope:Situation', {
@@ -55,7 +57,9 @@ export default class CustomContextPad {
     function appendServiceTaskStart() {
       return function(event) {
         const businessObject = bpmnFactory.create('bpmn:SubProcess');
-        businessObject.situationscopename="Test";
+        businessObject.id=businessObject.id.replace('SubProcess', 'SituationScope');
+
+        businessObject.name="Test";
         businessObject.situations=[];
         businessObject.isDefault=false;
         var situation =moddle.create('sitscope:Situation', {

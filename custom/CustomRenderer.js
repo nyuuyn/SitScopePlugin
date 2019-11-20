@@ -67,7 +67,7 @@ export default class CustomRenderer extends BaseRenderer {
           transform: transformstring2
         });
         svgClasses(text).add('djs-label'); 
-        this.renderEmbeddedLabel(parentNode, element, true ? 'center-top' : 'center-middle');
+        //this.renderEmbeddedLabel(parentNode, element, true ? 'center-top' : 'center-middle');
 
         svgAppend(text, document.createTextNode(suitabilityScore[i].situationname)); 
       
@@ -125,9 +125,9 @@ export default class CustomRenderer extends BaseRenderer {
   }
   
   renderEmbeddedLabel(parentGfx, element, align) {
-
+    console.log(element.situationscopename);
     var semantic = getBusinessObject(element);
-    return this.renderLabel(parentGfx, element.name, {
+    return this.renderLabel(parentGfx, element.situationscopename, {
       box: element,
       align: align,
       padding: 5,

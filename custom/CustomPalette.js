@@ -26,7 +26,8 @@ export default class CustomPalette {
     function createTask() {
       return function(event) {
         const businessObject = bpmnFactory.create('bpmn:SubProcess');
-        businessObject.situationscopename="Test";
+        businessObject.name="Test";
+        businessObject.id=businessObject.id.replace('SubProcess', 'SituationScope');
         businessObject.situations=[];
         businessObject.isDefault=false;
         var situation =moddle.create('sitscope:Situation', {

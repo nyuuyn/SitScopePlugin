@@ -49,7 +49,7 @@ export default function(group, element, bpmnFactory,moddle) {
       id : 'situationscopename',
       description : 'Situation Name',
       label : 'Situationname',
-      modelProperty : 'situationscopename'
+      modelProperty : 'name'
     }));
 
     group.entries.push(entryFactory.checkbox({
