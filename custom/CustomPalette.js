@@ -1,7 +1,7 @@
 const SUITABILITY_SCORE_HIGH = 100,
       SUITABILITY_SCORE_AVERGE = 50,
       SUITABILITY_SCORE_LOW = 25;
-
+//const cli = require('bpmn-js-cli');
 export default class CustomPalette {
   constructor(bpmnjs,bpmnFactory, create, elementFactory, palette, translate,moddle) {
     this.bpmnjs=bpmnjs;
@@ -10,7 +10,8 @@ export default class CustomPalette {
     this.elementFactory = elementFactory;
     this.translate = translate;
     this.moddle=moddle;
-    console.log(bpmnjs);
+   // console.log(cli);
+   console.log(process.cwd());
     palette.registerProvider(this);
   }
 
@@ -27,6 +28,8 @@ export default class CustomPalette {
       return function(event) {
         const businessObject = bpmnFactory.create('bpmn:SubProcess');
         businessObject.name="Test";
+
+    
         businessObject.id=businessObject.id.replace('SubProcess', 'SituationScope');
         businessObject.situations=[];
         businessObject.isDefault=false;

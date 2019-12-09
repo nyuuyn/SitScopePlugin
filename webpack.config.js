@@ -6,7 +6,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'client'),
     filename: 'client.bundle.js'
-  },
+  }
+,  
   devtool:"source-map",
   module: {
     rules: [
@@ -17,5 +18,6 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  target: 'node'
 };

@@ -36,20 +36,23 @@
     "file-loader": "^3.0.1",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.23.1",
+    "electron": "^3.1.12",
     "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
-    "bpmn-js": "^3.2.2",
-    "chor-js": "../ChorMe",
-    "min-dash": "^3.4.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
-    "camunda-modeler-plugin-helpers": "^2.1.0",
+    "bpmn-js": "^3.2.2",
+    "bpmn-js-cli": "1.1.0",
     "bpmn-js-properties-panel": "^0.32.0",
+    "camunda-modeler-plugin-helpers": "^2.1.0",
+    "chor-js": "../ChorMe",
     "downloadjs": "^1.4.7",
+    "fs": "0.0.1-security",
+    "min-dash": "^3.4.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3"
   }
