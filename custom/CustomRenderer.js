@@ -18,12 +18,16 @@ import {
 } from 'bpmn-js/lib/draw/BpmnRenderUtil';
 
 import {
+  query as domQuery
+} from 'min-dom';
+
+import {
   is,
   getBusinessObject
 } from 'bpmn-js/lib/util/ModelUtil';
 
 import { isNil } from 'min-dash';
-
+import Ids from 'ids';
 const HIGH_PRIORITY = 1500,
       TASK_BORDER_RADIUS = 2,
       COLOR_GREEN = '#52B415',
@@ -32,12 +36,17 @@ const HIGH_PRIORITY = 1500,
 
 
 export default class CustomRenderer extends BaseRenderer {
-  constructor(config,eventBus, bpmnRenderer, textRenderer) {
+  constructor(config,eventBus, bpmnRenderer, textRenderer,modeling,canvas) {
     super(eventBus, HIGH_PRIORITY);
     this.defaultFillColor = config && config.defaultFillColor;
     this.defaultStrokeColor = config && config.defaultStrokeColor;
     this.bpmnRenderer = bpmnRenderer;
     this.textRenderer=textRenderer;
+    this.modeling=modeling;
+    this.markers = {};
+    this.RENDERER_IDS = new Ids();
+    this.rendererId = this.RENDERER_IDS.next();
+    this.canvas=canvas;
   }
   
   canRender(element) {
@@ -49,6 +58,7 @@ export default class CustomRenderer extends BaseRenderer {
   drawShape(parentNode, element) {
     const shape = this.bpmnRenderer.drawShape(parentNode, element);
     const suitabilityScore = this.getSituations(element);
+
     if(!isNil(suitabilityScore)){
       for (var i = 0; i < suitabilityScore.length; i++) {
         const color =this.getColor(suitabilityScore[i]);
@@ -79,6 +89,116 @@ export default class CustomRenderer extends BaseRenderer {
     }
     return shape;
     
+  }
+
+  drawConnection(parentNode,element){
+    const shape = this.bpmnRenderer.drawConnection(parentNode, element);
+    if(is(element,'bpmn:SequenceFlow')){
+      console.log(element);
+      const businessObject = getBusinessObject(element);
+  
+      var flowtype   = businessObject.$attrs.flowtype;
+      console.log(flowtype);
+      if(flowtype=="Continue"){
+        svgAttr(shape, {
+          stroke: 'green',
+          markerEnd: this.marker('sequenceflow-end', 'green', 'green'),
+          'stroke-width': '10px'
+              });
+      }else if(flowtype=="Adapt"){
+        svgAttr(shape, {
+          stroke: 'blue',
+          markerEnd: this.marker('sequenceflow-end', 'blue', 'blue'),
+          'stroke-width': '10px'
+              });
+      }
+     
+    //  this.modeling.setColor(element,{
+    //    stroke: 'green'      
+    //  });
+
+    };
+  }
+  
+  marker(type, fill, stroke) {
+    var id = type + '-' + this.colorEscape(fill) + '-' + this.colorEscape(stroke) + '-' + this.rendererId;
+
+    if (!this.markers[id]) {
+      this.createMarker(id, type, fill, stroke);
+    }
+
+    return 'url(#' + id + ')';
+  }
+
+  createMarker(id, type, fill, stroke) {
+
+    if (type === 'sequenceflow-end') {
+      var sequenceflowEnd = svgCreate('path');
+      svgAttr(sequenceflowEnd, { d: 'M 1 5 L 11 10 L 1 15 Z' });
+
+      this.addMarker(id, {
+        element: sequenceflowEnd,
+        ref: { x: 11, y: 10 },
+        scale: 0.1,
+        attrs: {
+          fill: stroke,
+          stroke: stroke
+        }
+      });
+    }
+  }
+
+    addMarker(id, options) {
+    var attrs = assign({
+      fill: 'green',
+      strokeWidth: 10,
+      strokeLinecap: 'round',
+      strokeDasharray: 'none'
+    }, options.attrs);
+
+    var ref = options.ref || { x: 0, y: 0 };
+
+    var scale = options.scale || 1;
+
+    // fix for safari / chrome / firefox bug not correctly
+    // resetting stroke dash array
+    if (attrs.strokeDasharray === 'none') {
+      attrs.strokeDasharray = [10000, 1];
+    }
+
+    var marker = svgCreate('marker');
+
+    svgAttr(options.element, attrs);
+
+    svgAppend(marker, options.element);
+
+    svgAttr(marker, {
+      id: id,
+      viewBox: '0 0 20 20',
+      refX: ref.x,
+      refY: ref.y,
+      markerWidth: 20 * scale,
+      markerHeight: 20 * scale,
+      orient: 'auto'
+    });
+
+    var defs = domQuery('defs', this.canvas._svg);
+
+    if (!defs) {
+      defs = svgCreate('defs');
+
+      svgAppend(this.canvas._svg, defs);
+    }
+
+    svgAppend(defs, marker);
+
+    this.markers[id] = marker;
+  }
+
+  colorEscape(str) {
+
+    // only allow characters and numbers
+    return str.replace(/[^0-9a-zA-z]+/g, '_');
   }
 
   getShapePath(shape) {
@@ -145,7 +265,7 @@ export default class CustomRenderer extends BaseRenderer {
 }
 
 CustomRenderer.$inject = [ 'config',
- 'eventBus', 'bpmnRenderer', 'textRenderer' ];
+ 'eventBus', 'bpmnRenderer', 'textRenderer','modeling','canvas' ];
 
 // helpers //////////
 

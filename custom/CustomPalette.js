@@ -11,7 +11,6 @@ export default class CustomPalette {
     this.translate = translate;
     this.moddle=moddle;
    // console.log(cli);
-   console.log(process.cwd());
     palette.registerProvider(this);
   }
 

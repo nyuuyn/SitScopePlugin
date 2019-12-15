@@ -113,6 +113,19 @@
             ]
         },
         {
+            "name": "AdaptSequence",
+            "superClass": [
+                "bpmn:SequenceFlow"
+            ],
+            "properties": [
+                {
+                    "name": "flowtype",
+                    "type": "FlowType",
+                    "isAttr": true
+                }
+            ]
+        },
+        {
             "name": "Situation",
             "superClass": [
                 "bpmn:BaseElement"
@@ -224,6 +237,18 @@
                     "name": "Sequential"
                 }
             ]
+        },
+        {
+            "name": "FlowType",
+            "literalValues": [
+                {
+                    "name": "Adapt"
+                },
+                {
+                    "name": "Continue"
+                }
+            ]
         }
+
     ] 
 }

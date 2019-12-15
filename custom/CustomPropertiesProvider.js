@@ -12,6 +12,7 @@ import idProps from 'bpmn-js-properties-panel/lib/provider/bpmn/parts/IdProps';
 import nameProps from 'bpmn-js-properties-panel/lib/provider/bpmn/parts/NameProps';
 import situationscopetab from './parts/SituationalScopeProps';
 import test2 from './parts/AdaptionProps';
+import sequenceAdaptionFlow from './parts/SequenceAdaptionFlowProps';
 
 function createGeneralTabGroups(element, bpmnFactory, canvas, elementRegistry, translate) {
 
@@ -57,7 +58,7 @@ function createGeneralTabGroups(element, bpmnFactory, canvas, elementRegistry, t
       entries: []
     };
   
-    // Add the situation props to the sit scope group.
+    // Add the situation pcreateAdaptionTabGroupsrops to the sit scope group.
     situationscopetab(situationScopeGroup, element,bpmnFactory,moddle);
   
     return [
@@ -82,6 +83,24 @@ function createGeneralTabGroups(element, bpmnFactory, canvas, elementRegistry, t
       adaptionMagicGroup
     ];
   }
+
+    // Create the custom adaption tab
+    function createAdaptionFlowTabGroups(element,bpmnFactory,moddle) {
+  
+      // Create a group called "Adaption Flow".
+      var adaptionFlowMagicGroup = {
+        id: 'adaption-scope',
+        label: 'Adaption Flow',
+        entries: []
+      };
+    
+      // Add the adaption props to the adaption scope group.
+      sequenceAdaptionFlow(adaptionFlowMagicGroup, element,bpmnFactory,moddle);
+    
+      return [
+        adaptionFlowMagicGroup
+      ];
+    }
   
 export default function CustomPropertiesProvider(eventBus, bpmnFactory, canvas,
 elementRegistry, translate, moddle){
@@ -107,12 +126,19 @@ elementRegistry, translate, moddle){
         label: 'Adaption Properties',
         groups: createAdaptionTabGroups(element,bpmnFactory,moddle)
       };
+
+      var sequenceTab = {
+        id: 'sequenceflowProperties',
+        label: 'Adaption Flow Properties',
+        groups: createAdaptionFlowTabGroups(element,bpmnFactory,moddle)
+      };
   
       // Show general + "Sit" tab
       return [
         generalTab,
         sitTab,
-        adaptionTab
+        adaptionTab,
+        sequenceTab
       ];
     };
   }
