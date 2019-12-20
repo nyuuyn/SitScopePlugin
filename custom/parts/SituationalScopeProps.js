@@ -22,7 +22,6 @@ export default function(group, element, bpmnFactory,moddle) {
 
   var adaptselectOptions = [
     { value: 'Adaption', name: 'Adaption' },
-    { value: 'Abort', name: 'Abort' },
     { value: 'Retry', name: 'Retry' },
     { value: 'Continue', name: 'Continue' }
   ];
@@ -31,7 +30,9 @@ export default function(group, element, bpmnFactory,moddle) {
     { value: 'WaitReturn', name: 'WaitReturn' },
     { value: 'WaitAdapt', name: 'WaitAdapt' },
     { value: 'Return', name: 'Return' },
-    { value: 'Adapt', name: 'Adapt' }
+    { value: 'Adapt', name: 'Adapt' },
+    { value: 'WaitRetry', name: 'WaitRetry' },
+    { value: 'Retry', name: 'Retry' }
   ];
 
   var executionStrategyselectOptions = [

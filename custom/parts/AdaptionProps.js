@@ -36,7 +36,7 @@ export default function(group, element, bpmnFactory,moddle) {
             if(!isNil(bo.outgoing)){
                 for(var i=0;i<bo.outgoing.length;i++){
                     var newelement={
-                    situationscopename:bo.outgoing[i].targetRef.situationscopename,
+                    situationscopename:bo.outgoing[i].targetRef.name,
                     isDefault:bo.outgoing[i].targetRef.isDefault
                     };
 

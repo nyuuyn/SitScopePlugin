@@ -25,7 +25,9 @@ html, body, #container {
   font-family: 'Arial', sans-serif;
 }
 
-
+.bpmn-icon-task.yellow {
+  color: #ffc800 !important;
+}
 
 .bpmn-icon-task.green {
   color: #52B415 !important;

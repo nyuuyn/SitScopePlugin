@@ -24,6 +24,10 @@
 
                 },
                 {
+                    "name": "evaluationProcess",
+                    "type": "EvaluationProcess"
+                },
+                {
                     "name": "situations",
                     "type": "Situation",
                     "isMany": true
@@ -42,7 +46,7 @@
                 {
                     "name": "entryConditionWait",
                     "isAttr": true,
-                    "type": "Integer"
+                    "type": "String"
                 },
                 {
                     "name": "adaptCondition",
@@ -57,7 +61,7 @@
                 {
                     "name": "runningCompensateConditionWait",
                     "isAttr": true,
-                    "type": "Integer"
+                    "type": "String"
                 },
                 {
                     "name": "continueSituation",
@@ -108,6 +112,25 @@
                     "name": "continueSituation",
                     "type": "SituationalScope",
                     "isAttr": true,
+                    "isReference": true
+                }
+            ]
+        },
+        {
+            "name": "EvaluationProcess",
+            "extends": [
+                "bpmn:SubProcess"
+              ],
+            "properties": [
+                {
+                    "name": "evaluationprocessname",
+                    "type": "String",
+                    "isAttr": true
+                },
+                {
+                    "name": "choreographyReference",
+                    "type": "Choreography",
+                    "isMany": true,
                     "isReference": true
                 }
             ]
@@ -175,9 +198,6 @@
                     "name": "Adaption"
                 },
                 {
-                    "name": "Abort"
-                },
-                {
                     "name": "Retry"
                 },
                 {
@@ -199,6 +219,12 @@
                 },
                 {
                     "name": "Adapt"
+                },
+                {
+                    "name": "WaitRetry"
+                },
+                {
+                    "name": "Retry"
                 }
             ]
         },

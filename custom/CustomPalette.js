@@ -1,5 +1,5 @@
-const SUITABILITY_SCORE_HIGH = 100,
-      SUITABILITY_SCORE_AVERGE = 50,
+const SITSCOPE = "sit",
+      EVALUATIONPROCESS = "eval",
       SUITABILITY_SCORE_LOW = 25;
 //const cli = require('bpmn-js-cli');
 export default class CustomPalette {
@@ -23,27 +23,41 @@ export default class CustomPalette {
       moddle
     } = this;
 
-    function createTask() {
+    function createTask(processtype) {
       return function(event) {
+        if(processtype==="sit"){
+          const businessObject = bpmnFactory.create('bpmn:SubProcess');
+          businessObject.name="Test";
+  
+      
+          businessObject.id=businessObject.id.replace('SubProcess', 'SituationScope');
+          businessObject.situations=[];
+          businessObject.isDefault=false;
+          var situation =moddle.create('sitscope:Situation', {
+            "situationname": "TestSituation",
+            "situationtrigger": "true"
+                    });
+  
+          businessObject.situations.push(situation);
+          const shape = elementFactory.createShape({
+            type: 'bpmn:SubProcess',
+            isExpanded: true,
+            businessObject: businessObject
+          });
+          create.start(event, shape); 
+        }else if(processtype==="eval"){
         const businessObject = bpmnFactory.create('bpmn:SubProcess');
-        businessObject.name="Test";
+  
+      
+          businessObject.id=businessObject.id.replace('SubProcess', 'EvaluationProcess');
 
-    
-        businessObject.id=businessObject.id.replace('SubProcess', 'SituationScope');
-        businessObject.situations=[];
-        businessObject.isDefault=false;
-        var situation =moddle.create('sitscope:Situation', {
-          "situationname": "TestSituation",
-          "situationtrigger": "true"
-                  });
-
-        businessObject.situations.push(situation);
-        const shape = elementFactory.createShape({
-          type: 'bpmn:SubProcess',
-          isExpanded: true,
-          businessObject: businessObject
-        });
-        create.start(event, shape); 
+          const shape = elementFactory.createShape({
+            type: 'bpmn:SubProcess',
+            isExpanded: true,
+            businessObject: businessObject
+          });
+          create.start(event, shape); 
+        }
       }
     }
 
@@ -53,8 +67,17 @@ export default class CustomPalette {
         className: 'bpmn-icon-task green',
         title: translate('Create Situational Scope'),
         action: {
-          dragstart: createTask(),
-          click: createTask()
+          dragstart: createTask(SITSCOPE),
+          click: createTask(SITSCOPE)
+        }
+      },
+      'create.low-task': {
+        group: 'activity',
+        className: 'bpmn-icon-task yellow',
+        title: translate('Create Evaluation Process'),
+        action: {
+          dragstart: createTask(EVALUATIONPROCESS),
+          click: createTask(EVALUATIONPROCESS)
         }
       }
     }

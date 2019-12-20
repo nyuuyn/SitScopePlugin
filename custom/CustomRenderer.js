@@ -221,7 +221,7 @@ export default class CustomRenderer extends BaseRenderer {
   getColor(suitabilityScore) {
     if (suitabilityScore.situationtrigger=="true") {
       return COLOR_GREEN;
-    }else{
+    }else if(suitabilityScore.situationtrigger=="false"){
       return COLOR_RED;
 
     }

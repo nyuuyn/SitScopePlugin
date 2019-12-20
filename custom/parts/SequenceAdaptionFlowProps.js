@@ -13,8 +13,10 @@ export default function(group, element, bpmnFactory,moddle) {
   // Only return an entry, if the currently selected
   // element is a start event.
   var adaptionStrategyselectOptions = [
+    { value: '', name: 'Default' },
     { value: 'Adapt', name: 'Adapt' },
     { value: 'Continue', name: 'Continue' }
+    
   ];
   if (is(element, 'bpmn:SequenceFlow')) {
  
