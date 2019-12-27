@@ -12,27 +12,20 @@ export default function(group, element, bpmnFactory,moddle) {
   // Only return an entry, if the currently selected
   // element is a start event.
   var entryselectOptions = [
-    { value: 'WaitAbort', name: 'WaitAbort' },
     { value: 'Abort', name: 'Abort' },
-    { value: 'WaitAdapt', name: 'WaitAdapt' },
     { value: 'Adapt', name: 'Adapt' },
-    { value: 'WaitReturn', name: 'WaitReturn' },
-    { value: 'Return', name: 'Return' }
-  ];
-
-  var adaptselectOptions = [
-    { value: 'Adaption', name: 'Adaption' },
+    { value: 'Return', name: 'Return' },
     { value: 'Retry', name: 'Retry' },
     { value: 'Continue', name: 'Continue' }
   ];
 
+
   var runningselectOptions = [
-    { value: 'WaitReturn', name: 'WaitReturn' },
-    { value: 'WaitAdapt', name: 'WaitAdapt' },
-    { value: 'Return', name: 'Return' },
+    { value: 'Abort', name: 'Abort' },
     { value: 'Adapt', name: 'Adapt' },
-    { value: 'WaitRetry', name: 'WaitRetry' },
-    { value: 'Retry', name: 'Retry' }
+    { value: 'Return', name: 'Return' },
+    { value: 'Retry', name: 'Retry' },
+    { value: 'Continue', name: 'Continue' }
   ];
 
   var executionStrategyselectOptions = [
@@ -41,10 +34,7 @@ export default function(group, element, bpmnFactory,moddle) {
     { value: 'All', name: 'All' }
   ];
 
-  var executionTypeselectOptions = [
-    { value: 'Parallel', name: 'Parallel' },
-    { value: 'Sequential', name: 'Sequential' }
-  ];
+
   if (is(element, 'bpmn:SubProcess')) {
     group.entries.push(entryFactory.textField({
       id : 'situationscopename',
@@ -119,6 +109,12 @@ export default function(group, element, bpmnFactory,moddle) {
       selectOptions: entryselectOptions,
       modelProperty : 'entryCondition'
     }));
+    group.entries.push(entryFactory.checkbox({
+      id : 'waitforentry',
+      description : 'Wait for Entry Condition Evaluation?',
+      label : 'Wait for Entry',
+      modelProperty : 'waitforentry'
+    }));
     group.entries.push(entryFactory.textBox({
       id : 'entryConditionWait',
       description : 'Entry Condition Wait Time, only Integer allowed',
@@ -126,18 +122,17 @@ export default function(group, element, bpmnFactory,moddle) {
       modelProperty : 'entryConditionWait'
     }));
     group.entries.push(entryFactory.selectBox({
-      id : 'adaptConditionsvalue',
-      description : 'Adaption Condition',
-      label : 'Choose Adaption Condition',
-      selectOptions: adaptselectOptions,
-      modelProperty : 'adaptCondition'
-    }));
-    group.entries.push(entryFactory.selectBox({
       id : 'runningCompensateConditionsvalue',
       description : 'Running Compensate Condition',
       label : 'Choose Running Compensate Condition',
       selectOptions: runningselectOptions,
       modelProperty : 'runningCompensateCondition'
+    }));
+    group.entries.push(entryFactory.checkbox({
+      id : 'waitforrunning',
+      description : 'Wait for Resume?',
+      label : 'Wait for Resume',
+      modelProperty : 'waitforcompensate'
     }));
     group.entries.push(entryFactory.textBox({
       id : 'runningCompensateConditionWait',
@@ -158,13 +153,7 @@ export default function(group, element, bpmnFactory,moddle) {
       label : 'Define x out of y',
       modelProperty : 'executionStrategyDefinition'
     }));
-    group.entries.push(entryFactory.selectBox({
-      id : 'executionType',
-      description : 'Eentry Execution Type',
-      label : 'Choose Execution Type',
-      selectOptions: executionTypeselectOptions,
-      modelProperty : 'executionType'
-    }));
+
     
   }
 }
