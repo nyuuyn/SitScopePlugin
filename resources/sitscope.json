@@ -258,10 +258,10 @@
             "name": "ExecutionType",
             "literalValues": [
                 {
-                    "name": "Parallel"
+                    "name": "Non-interrupting"
                 },
                 {
-                    "name": "Sequential"
+                    "name": "Interrupting"
                 }
             ]
         },

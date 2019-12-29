@@ -34,6 +34,7 @@ export default class CustomPalette {
           businessObject.waitforcompensate="false";
           businessObject.executionStrategy="One";
           businessObject.adaptionStrategy="BestFit";
+          businessObject.executionType="Non-interrupting";
 
           businessObject.id=businessObject.id.replace('SubProcess', 'SituationScope');
           businessObject.situations=[];

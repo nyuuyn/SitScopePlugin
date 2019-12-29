@@ -66,6 +66,7 @@ export default class CustomContextPad {
         businessObject.waitforcompensate="false";
         businessObject.executionStrategy="One";
         businessObject.adaptionStrategy="BestFit";
+        businessObject.executionType="Non-interrupting";
 
         businessObject.situations=[];
         businessObject.isDefault=false;

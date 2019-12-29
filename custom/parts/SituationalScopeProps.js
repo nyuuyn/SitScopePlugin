@@ -33,6 +33,10 @@ export default function(group, element, bpmnFactory,moddle) {
     { value: 'x out of y', name: 'x out of y' },
     { value: 'All', name: 'All' }
   ];
+  var executionTypeselectOptions = [
+    { value: 'Non-interrupting', name: 'Non-interrupting' },
+    { value: 'Interrupting', name: 'Interrupting' }
+  ];
 
 
   if (is(element, 'bpmn:SubProcess')) {
@@ -146,6 +150,13 @@ export default function(group, element, bpmnFactory,moddle) {
       label : 'Choose Execution Strategy',
       selectOptions: executionStrategyselectOptions,
       modelProperty : 'executionStrategy'
+    }));
+    group.entries.push(entryFactory.selectBox({
+      id : 'executionType',
+      description : 'Entry Execution Type',
+      label : 'Choose Execution Type',
+      selectOptions: executionTypeselectOptions,
+      modelProperty : 'executionType'
     }));
     group.entries.push(entryFactory.textBox({
       id : 'xoutofy',
