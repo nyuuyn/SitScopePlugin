@@ -60,6 +60,13 @@ export default class CustomContextPad {
         businessObject.id=businessObject.id.replace('SubProcess', 'SituationScope');
 
         businessObject.name="Test";
+        businessObject.entryCondition="Abort";
+        businessObject.waitforentry="false";
+        businessObject.runningCompensateCondition="Abort";
+        businessObject.waitforcompensate="false";
+        businessObject.executionStrategy="One";
+        businessObject.adaptionStrategy="BestFit";
+
         businessObject.situations=[];
         businessObject.isDefault=false;
         var situation =moddle.create('sitscope:Situation', {

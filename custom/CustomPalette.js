@@ -28,8 +28,13 @@ export default class CustomPalette {
         if(processtype==="sit"){
           const businessObject = bpmnFactory.create('bpmn:SubProcess');
           businessObject.name="Test";
-  
-      
+          businessObject.entryCondition="Abort";
+          businessObject.waitforentry="false";
+          businessObject.runningCompensateCondition="Abort";
+          businessObject.waitforcompensate="false";
+          businessObject.executionStrategy="One";
+          businessObject.adaptionStrategy="BestFit";
+
           businessObject.id=businessObject.id.replace('SubProcess', 'SituationScope');
           businessObject.situations=[];
           businessObject.isDefault=false;
