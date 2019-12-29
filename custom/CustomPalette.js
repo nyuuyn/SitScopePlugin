@@ -27,7 +27,7 @@ export default class CustomPalette {
       return function(event) {
         if(processtype==="sit"){
           const businessObject = bpmnFactory.create('bpmn:SubProcess');
-          businessObject.name="Test";
+          businessObject.name="Execution";
           businessObject.entryCondition="Abort";
           businessObject.waitforentry="false";
           businessObject.runningCompensateCondition="Abort";
@@ -56,7 +56,7 @@ export default class CustomPalette {
   
       
           businessObject.id=businessObject.id.replace('SubProcess', 'EvaluationProcess');
-
+          businessObject.name="EvaluationProcess";
           const shape = elementFactory.createShape({
             type: 'bpmn:SubProcess',
             isExpanded: true,

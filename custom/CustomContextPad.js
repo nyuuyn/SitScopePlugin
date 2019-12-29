@@ -59,7 +59,7 @@ export default class CustomContextPad {
         const businessObject = bpmnFactory.create('bpmn:SubProcess');
         businessObject.id=businessObject.id.replace('SubProcess', 'SituationScope');
 
-        businessObject.name="Test";
+        businessObject.name="Execution";
         businessObject.entryCondition="Abort";
         businessObject.waitforentry="false";
         businessObject.runningCompensateCondition="Abort";
@@ -67,6 +67,7 @@ export default class CustomContextPad {
         businessObject.executionStrategy="One";
         businessObject.adaptionStrategy="BestFit";
         businessObject.executionType="Non-interrupting";
+        
 
         businessObject.situations=[];
         businessObject.isDefault=false;
