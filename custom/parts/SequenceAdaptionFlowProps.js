@@ -18,6 +18,14 @@ export default function(group, element, bpmnFactory,moddle) {
     { value: 'Continue', name: 'Continue' }
     
   ];
+
+  var conditionselectOptions = [
+    { value: '', name: 'Default' },
+    { value: 'WaitCondition', name: 'WaitCondition' },
+    { value: 'RunningCompensateCondition', name: 'RunningCompensateCondition' }
+    
+  ];
+
   if (is(element, 'bpmn:SequenceFlow')) {
  
     group.entries.push(entryFactory.selectBox({
@@ -28,5 +36,13 @@ export default function(group, element, bpmnFactory,moddle) {
       modelProperty : 'flowtype'
     }));
     
+
+    group.entries.push(entryFactory.selectBox({
+      id : 'conditiontype',
+      description : 'Conditiontype',
+      label : 'Choose Type of Condition',
+      selectOptions: conditionselectOptions,
+      modelProperty : 'conditionType'
+    }));
   }
 }

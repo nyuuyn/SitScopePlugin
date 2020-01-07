@@ -121,7 +121,7 @@ export default function(group, element, bpmnFactory,moddle) {
     }));
     group.entries.push(entryFactory.textBox({
       id : 'entryConditionWait',
-      description : 'Entry Condition Wait Time, only Integer allowed',
+      description : 'Entry Condition Wait Time, according to ISO 8601',
       label : 'Entry Condition Wait Time',
       modelProperty : 'entryConditionWait'
     }));
@@ -140,7 +140,7 @@ export default function(group, element, bpmnFactory,moddle) {
     }));
     group.entries.push(entryFactory.textBox({
       id : 'runningCompensateConditionWait',
-      description : 'Entry Condition Wait Time, only Integer allowed',
+      description : 'Entry Condition Wait Time, according to ISO 8601',
       label : 'Entry Condition Wait Time',
       modelProperty : 'runningCompensateConditionWait'
     }));
