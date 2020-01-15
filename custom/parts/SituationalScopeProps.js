@@ -58,7 +58,7 @@ export default function(group, element, bpmnFactory,moddle) {
       id: 'situations',
       modelProperties: [ 'situationname', 'situationtrigger' ],
       labels: [ 'SituationName', 'SituationTrigger' ],
-      addLabel: 'Add Entry',
+      addLabel: 'Add Situation Element',
   
       getElements: function(element, node) {
         var bo = getBusinessObject(element);
@@ -140,10 +140,11 @@ export default function(group, element, bpmnFactory,moddle) {
     }));
     group.entries.push(entryFactory.textBox({
       id : 'runningCompensateConditionWait',
-      description : 'Entry Condition Wait Time, according to ISO 8601',
-      label : 'Entry Condition Wait Time',
+      description : 'Resume Condition Wait Time, according to ISO 8601',
+      label : 'Resume Condition Wait Time',
       modelProperty : 'runningCompensateConditionWait'
     }));
+    /*
     group.entries.push(entryFactory.selectBox({
       id : 'executionStrategy',
       description : 'Entry Execution Strategy',
@@ -151,6 +152,7 @@ export default function(group, element, bpmnFactory,moddle) {
       selectOptions: executionStrategyselectOptions,
       modelProperty : 'executionStrategy'
     }));
+    */
     group.entries.push(entryFactory.selectBox({
       id : 'executionType',
       description : 'Entry Execution Type',
@@ -158,13 +160,14 @@ export default function(group, element, bpmnFactory,moddle) {
       selectOptions: executionTypeselectOptions,
       modelProperty : 'executionType'
     }));
+    /*
     group.entries.push(entryFactory.textBox({
       id : 'xoutofy',
       description : 'Entry Number of x out of y',
       label : 'Define x out of y',
       modelProperty : 'executionStrategyDefinition'
     }));
-
+    */
     
   }
 }
