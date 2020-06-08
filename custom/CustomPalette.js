@@ -2,6 +2,10 @@ const SITSCOPE = "sit",
       EVALUATIONPROCESS = "eval",
       SUITABILITY_SCORE_LOW = 25;
 //const cli = require('bpmn-js-cli');
+
+/**
+ * This class implements functionality when adding a shape from the palette to the main canvas
+ */
 export default class CustomPalette {
   constructor(bpmnjs,bpmnFactory, create, elementFactory, palette, translate,moddle) {
     this.bpmnjs=bpmnjs;
@@ -29,32 +33,27 @@ export default class CustomPalette {
           const businessObject = bpmnFactory.create('bpmn:SubProcess');
           businessObject.name="Execution";
           businessObject.entryCondition="Abort";
-          businessObject.waitforentry="false";
-          businessObject.runningCompensateCondition="Abort";
-          businessObject.waitforcompensate="false";
-          businessObject.executionStrategy="One";
-          businessObject.adaptionStrategy="BestFit";
-          businessObject.executionType="Non-interrupting";
+          businessObject.situationViolation="Abort";
 
           businessObject.id=businessObject.id.replace('SubProcess', 'SituationScope');
           businessObject.situations=[];
-          businessObject.isDefault=false;
+
           var situation =moddle.create('sitscope:Situation', {
             "situationname": "TestSituation",
-            "situationtrigger": "true"
+            "situationtrigger": true
                     });
-  
+
           businessObject.situations.push(situation);
           const shape = elementFactory.createShape({
             type: 'bpmn:SubProcess',
             isExpanded: true,
             businessObject: businessObject
           });
-          create.start(event, shape); 
+          create.start(event, shape);
         }else if(processtype==="eval"){
         const businessObject = bpmnFactory.create('bpmn:SubProcess');
-  
-      
+
+
           businessObject.id=businessObject.id.replace('SubProcess', 'EvaluationProcess');
           businessObject.name="EvaluationProcess";
           const shape = elementFactory.createShape({
@@ -62,7 +61,7 @@ export default class CustomPalette {
             isExpanded: true,
             businessObject: businessObject
           });
-          create.start(event, shape); 
+          create.start(event, shape);
         }
       }
     }

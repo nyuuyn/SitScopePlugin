@@ -7,81 +7,46 @@ import {
   getBusinessObject
 } from 'bpmn-js/lib/util/ModelUtil';
 
+/*
+* These functions provide the detailed info for property panels and are called by the CustomPropertiesProvider.js
+ */
+
 export default function(group, element, bpmnFactory,moddle) {
 
   // Only return an entry, if the currently selected
   // element is a start event.
-  var entryselectOptions = [
+  var selectOptions = [
     { value: 'Abort', name: 'Abort' },
-    { value: 'Adapt', name: 'Adapt' },
-    { value: 'Return', name: 'Return' },
-    { value: 'Retry', name: 'Retry' },
+    { value: 'Wait', name: 'Wait' },
     { value: 'Continue', name: 'Continue' }
   ];
-
-
-  var runningselectOptions = [
-    { value: 'Abort', name: 'Abort' },
-    { value: 'Adapt', name: 'Adapt' },
-    { value: 'Return', name: 'Return' },
-    { value: 'Retry', name: 'Retry' },
-    { value: 'Continue', name: 'Continue' }
-  ];
-
-  var executionStrategyselectOptions = [
-    { value: 'One', name: 'One' },
-    { value: 'x out of y', name: 'x out of y' },
-    { value: 'All', name: 'All' }
-  ];
-  var executionTypeselectOptions = [
-    { value: 'Non-interrupting', name: 'Non-interrupting' },
-    { value: 'Interrupting', name: 'Interrupting' }
-  ];
-
 
   if (is(element, 'bpmn:SubProcess')) {
-    group.entries.push(entryFactory.textField({
-      id : 'situationscopename',
-      description : 'Situation Name',
-      label : 'Situationname',
-      modelProperty : 'name'
-    }));
 
-    group.entries.push(entryFactory.checkbox({
-      id : 'default',
-      description : 'Default Situation',
-      label : 'Default Situation',
-      modelProperty : 'isDefault'
-    }));
-    
-    group.entries.push(entryFactory.table({
+    var table = entryFactory.table({
       id: 'situations',
       modelProperties: [ 'situationname', 'situationtrigger' ],
-      labels: [ 'SituationName', 'SituationTrigger' ],
+      labels: [ 'SituationName', 'Negate' ],
       addLabel: 'Add Situation Element',
-  
+
       getElements: function(element, node) {
         var bo = getBusinessObject(element);
-          return bo.situations;
-        
-  
+        return bo.situations;
       },
-  
+
       updateElement: function(element, values, node, idx) {
         var bo = getBusinessObject(element);
         var entry = bo.situations[idx];
-        
-     
-  
+
         return cmdHelper.updateBusinessObject(element, entry, values);
       },
-  
+
       addElement: function(element, node) {
         var bo = getBusinessObject(element);
         var newEntry = moddle.create('sitscope:Situation', {
           "situationname": "Test",
-          "situationtrigger": "true"
-                  });
+          "situationtrigger": true
+        });
         return cmdHelper.addElementsTolist(element, bo, 'situations', [ newEntry ]);
       },
 
@@ -89,37 +54,40 @@ export default function(group, element, bpmnFactory,moddle) {
         var bo = getBusinessObject(element);
         return cmdHelper.removeElementsFromList(element, bo, 'situations', null, [ bo.situations[idx] ]);
       },
-  
+
       editable: function(element, node, prop, idx) {
         var bo = getBusinessObject(element);
         return true;
       },
-  
 
-  
+
+
       show: function(element, node) {
         var bo = getBusinessObject(element);
         return true;
       }
-    }));
-    
+    });
+
+    group.entries.push(table);
 
 
-    
+
+
     group.entries.push(entryFactory.selectBox({
       id : 'entryConditionsvalue',
       description : 'Entry Condition',
       label : 'Choose Entry Condition',
-      selectOptions: entryselectOptions,
+      selectOptions: selectOptions,
       modelProperty : 'entryCondition'
     }));
-    group.entries.push(entryFactory.checkbox({
-      id : 'waitforentry',
-      description : 'Wait for Entry Condition Evaluation?',
-      label : 'Wait for Entry',
-      modelProperty : 'waitforentry'
+    group.entries.push(entryFactory.selectBox({
+      id : 'situationViolation',
+      description : 'Choose Situation Violation',
+      label : 'Choose Situation Violation',
+      selectOptions: selectOptions,
+      modelProperty : 'situationViolation'
     }));
-    group.entries.push(entryFactory.textBox({
+    /*group.entries.push(entryFactory.textBox({
       id : 'entryConditionWait',
       description : 'Entry Condition Wait Time, according to ISO 8601',
       label : 'Entry Condition Wait Time',
@@ -143,7 +111,7 @@ export default function(group, element, bpmnFactory,moddle) {
       description : 'Resume Condition Wait Time, according to ISO 8601',
       label : 'Resume Condition Wait Time',
       modelProperty : 'runningCompensateConditionWait'
-    }));
+    }));*/
     /*
     group.entries.push(entryFactory.selectBox({
       id : 'executionStrategy',
@@ -153,13 +121,13 @@ export default function(group, element, bpmnFactory,moddle) {
       modelProperty : 'executionStrategy'
     }));
     */
-    group.entries.push(entryFactory.selectBox({
+    /*group.entries.push(entryFactory.selectBox({
       id : 'executionType',
       description : 'Entry Execution Type',
       label : 'Choose Execution Type',
       selectOptions: executionTypeselectOptions,
       modelProperty : 'executionType'
-    }));
+    }));*/
     /*
     group.entries.push(entryFactory.textBox({
       id : 'xoutofy',
@@ -168,6 +136,6 @@ export default function(group, element, bpmnFactory,moddle) {
       modelProperty : 'executionStrategyDefinition'
     }));
     */
-    
+
   }
 }

@@ -5,7 +5,7 @@
     "xml": {
         "tagAlias": "lowerCase"
     },
-    "types": [ 
+    "types": [
         {
             "name": "SituationalScope",
             "extends": [
@@ -16,16 +16,6 @@
                     "name": "situationscopename",
                     "isAttr": true,
                     "type": "String"
-                },
-                {
-                    "name": "isDefault",
-                    "type": "Boolean",
-                    "isAttr": true
-
-                },
-                {
-                    "name": "evaluationProcess",
-                    "type": "EvaluationProcess"
                 },
                 {
                     "name": "situations",
@@ -43,124 +33,11 @@
                     "type": "EntryCondition",
                     "isAttr": true
                 },
-                {
-                    "name": "waitforentry",
-                    "isAttr": true,
-                    "type": "Boolean"
-                },
-                {
-                    "name": "entryConditionWait",
-                    "isAttr": true,
-                    "type": "String"
-                },
-                {
-                    "name": "adaptCondition",
-                    "type": "AdaptCondition",
-                    "isAttr": true
-                },
-                {
-                    "name": "runningCompensateCondition",
-                    "type": "RunningCompensateCondition",
-                    "isAttr": true
-                },
-                {
-                    "name": "waitforcompensate",
-                    "isAttr": true,
-                    "type": "Boolean"
-                },
-                {
-                    "name": "runningCompensateConditionWait",
-                    "isAttr": true,
-                    "type": "String"
-                },
-                {
-                    "name": "continueSituation",
-                    "type": "SituationalScope",
-                    "isAttr": true,
-                    "isReference": true
-                },
-                {
-                    "name": "adaptionStrategy",
-                    "type": "AdaptionStrategy",
-                    "isAttr": true
-                },
-                {
-                    "name": "adaptionSituations",
-                    "type": "adaptionSituations",
-                    "isAttr": true,
-                "isMany": true
-                },
-                {
-                    "name": "executionStrategy",
-                    "type": "ExecutionStrategy",
-                    "isAttr": true
-                },
-                {
-                    "name": "executionStrategyDefinition",
-                    "isAttr": true,
-                    "type": "Integer"
-                },
-                {
-                    "name": "executionType",
-                    "type": "ExecutionType",
-                    "isAttr": true
-                }
-            ]
-        },
-        {
-            "name": "AdaptionSituations",
-            "superClass": [
-                "bpmn:BaseElement"
-            ],
-            "properties": [
-                {
-                    "name": "id",
-                    "type": "String",
-                    "isAttr": true
-                },
-                {
-                    "name": "continueSituation",
-                    "type": "SituationalScope",
-                    "isAttr": true,
-                    "isReference": true
-                }
-            ]
-        },
-        {
-            "name": "EvaluationProcess",
-            "extends": [
-                "bpmn:SubProcess"
-              ],
-            "properties": [
-                {
-                    "name": "evaluationprocessname",
-                    "type": "String",
-                    "isAttr": true
-                },
-                {
-                    "name": "choreographyReference",
-                    "type": "Choreography",
-                    "isMany": true,
-                    "isReference": true
-                }
-            ]
-        },
-        {
-            "name": "AdaptSequence",
-            "superClass": [
-                "bpmn:SequenceFlow"
-            ],
-            "properties": [
-                {
-                    "name": "flowtype",
-                    "type": "FlowType",
-                    "isAttr": true
-                },
-                {
-                    "name": "conditionType",
-                    "type": "ConditionType",
-                    "isAttr": true
-                }
+              {
+                "name": "situationViolation",
+                "type": "SituationViolation",
+                "isAttr": true
+              }
             ]
         },
         {
@@ -174,11 +51,10 @@
                     "type": "String",
                     "isAttr": true
                 },
-                {
-                    "name": "situationtrigger",
-                    "type": "Boolean",
-                    "isAttr": true
-                }
+              {
+                "name": "situationtrigger",
+                "type": "Boolean"
+              }
             ]
         }
     ],
@@ -192,106 +68,20 @@
                 },
 
                 {
-                    "name": "Adapt"
-                },
-                {
-                    "name": "Return"
-                },
-                {
-                    "name": "Retry"
-                },
-                {
-                    "name": "Continue"
+                    "name": "Wait"
                 }
             ]
         },
         {
-            "name": "AdaptCondition",
-            "literalValues": [
-                {
-                    "name": "Adaption"
-                }
-
-            ]
-        },
-        {
-            "name": "RunningCompensateCondition",
+            "name": "SituationViolation",
             "literalValues": [
                 {
                     "name": "Abort"
                 },
                 {
-                    "name": "Adapt"
-                },
-                {
-                    "name": "Return"
-                },
-                {
-                    "name": "Retry"
-                },
-                {
                     "name": "Continue"
-                }
-            ]
-        },
-        {
-            "name": "AdaptionStrategy",
-            "literalValues": [
-                {
-                    "name": "BestFit"
-                },
-                {
-                    "name": "AllFit"
-                }
-            ]
-        },
-        {
-            "name": "ExecutionStrategy",
-            "literalValues": [
-                {
-                    "name": "One"
-                },
-                {
-                    "name": "x out of y"
-                },
-                {
-                    "name": "All"
-                }
-            ]
-        },
-        {
-            "name": "ExecutionType",
-            "literalValues": [
-                {
-                    "name": "Non-interrupting"
-                },
-                {
-                    "name": "Interrupting"
-                }
-            ]
-        },
-        {
-            "name": "FlowType",
-            "literalValues": [
-                {
-                    "name": "Adapt"
-                },
-                {
-                    "name": "Continue"
-                }
-            ]
-        },
-        {
-            "name": "ConditionType",
-            "literalValues": [
-                {
-                    "name": "WaitCondition"
-                },
-                {
-                    "name": "RunningCompensateCondition"
                 }
             ]
         }
-
-    ] 
+    ]
 }
