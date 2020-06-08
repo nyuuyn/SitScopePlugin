@@ -2,6 +2,10 @@ const SUITABILITY_SCORE_HIGH = 100,
       SUITABILITY_SCORE_AVERGE = 50,
       SUITABILITY_SCORE_LOW = 25;
 
+
+/*
+ * This class has functions to add new elements to the canvas by appending them to already available elemetns in the canvas, i.e., this enables adding elements when clicking elements in the canvas instead of the palette
+ */
 export default class CustomContextPad {
   constructor(bpmnFactory, config, contextPad, create, elementFactory, injector, translate,moddle) {
     this.bpmnFactory = bpmnFactory;
@@ -34,19 +38,20 @@ export default class CustomContextPad {
 
           businessObject.name="Test";
           businessObject.situations=[];
-          businessObject.isDefault=false;
+          businessObject.entryCondition="Abort";
+          businessObject.situationViolation="Abort";
           var situation =moddle.create('sitscope:Situation', {
             "situationname": "TestSituation",
-            "situationtrigger": "true"
+            "situationtrigger": true
                     });
-  
+
           businessObject.situations.push(situation);
           const shape = elementFactory.createShape({
             type: 'bpmn:SubProcess',
             isExpanded: true,
             businessObject: businessObject
           });
-    
+
           autoPlace.append(element, shape);
         } else {
           appendServiceTaskStart(event, element);
@@ -61,19 +66,12 @@ export default class CustomContextPad {
 
         businessObject.name="Execution";
         businessObject.entryCondition="Abort";
-        businessObject.waitforentry="false";
-        businessObject.runningCompensateCondition="Abort";
-        businessObject.waitforcompensate="false";
-        businessObject.executionStrategy="One";
-        businessObject.adaptionStrategy="BestFit";
-        businessObject.executionType="Non-interrupting";
-        
+        businessObject.situationViolation="Abort";
 
         businessObject.situations=[];
-        businessObject.isDefault=false;
         var situation =moddle.create('sitscope:Situation', {
           "situationname": "TestSituation",
-          "situationtrigger": "true"
+          "situationtrigger": true
                   });
 
         businessObject.situations.push(situation);
@@ -82,10 +80,10 @@ export default class CustomContextPad {
           isExpanded: true,
           businessObject: businessObject
         });
-        create.start(event, shape); 
+        create.start(event, shape);
       }
     }
-    
+
     return {
       'append.high-task': {
         group: 'model',

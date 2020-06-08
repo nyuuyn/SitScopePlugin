@@ -9,7 +9,7 @@ import {
 
 import {
   assign
-  
+
 } from 'min-dash';
 
 import {
@@ -34,6 +34,9 @@ const HIGH_PRIORITY = 1500,
       COLOR_YELLOW = '#ffc800',
       COLOR_RED = '#cc0000';
 
+/*
+ * Class is used to render the elements such as situations within the canvas
+ */
 
 export default class CustomRenderer extends BaseRenderer {
   constructor(config,eventBus, bpmnRenderer, textRenderer,modeling,canvas) {
@@ -48,7 +51,7 @@ export default class CustomRenderer extends BaseRenderer {
     this.rendererId = this.RENDERER_IDS.next();
     this.canvas=canvas;
   }
-  
+
   canRender(element) {
 
     // ignore labels
@@ -62,7 +65,7 @@ export default class CustomRenderer extends BaseRenderer {
     if(!isNil(suitabilityScore)){
       for (var i = 0; i < suitabilityScore.length; i++) {
         const color =this.getColor(suitabilityScore[i]);
-  
+
         const rect = drawRect(parentNode, 100, 20, TASK_BORDER_RADIUS, color);
         var transformstring='translate(-20,'+(-10+(i*20))+')';
         svgAttr(rect, {
@@ -70,25 +73,25 @@ export default class CustomRenderer extends BaseRenderer {
         });
         var transformstring2='translate(-15,'+(5+(i*20))+')';
 
-        var text = svgCreate('text'); 
+        var text = svgCreate('text');
 
         svgAttr(text, {
           fill: '#fff',
           transform: transformstring2
         });
-        svgClasses(text).add('djs-label'); 
+        svgClasses(text).add('djs-label');
         //this.renderEmbeddedLabel(parentNode, element, true ? 'center-top' : 'center-middle');
 
-        svgAppend(text, document.createTextNode(suitabilityScore[i].situationname)); 
-      
+        svgAppend(text, document.createTextNode(suitabilityScore[i].situationname));
+
         svgAppend(parentNode, text);
-      
-  
-      
+
+
+
   }
     }
     return shape;
-    
+
   }
 
   drawConnection(parentNode,element){
@@ -96,7 +99,7 @@ export default class CustomRenderer extends BaseRenderer {
     if(is(element,'bpmn:SequenceFlow')){
       console.log(element);
       const businessObject = getBusinessObject(element);
-  
+
       var flowtype   = businessObject.$attrs.flowtype;
       console.log(flowtype);
       if(flowtype=="Continue"){
@@ -112,14 +115,14 @@ export default class CustomRenderer extends BaseRenderer {
           'stroke-width': '10px'
               });
       }
-     
+
     //  this.modeling.setColor(element,{
-    //    stroke: 'green'      
+    //    stroke: 'green'
     //  });
 
     };
   }
-  
+
   marker(type, fill, stroke) {
     var id = type + '-' + this.colorEscape(fill) + '-' + this.colorEscape(stroke) + '-' + this.rendererId;
 
@@ -212,7 +215,7 @@ export default class CustomRenderer extends BaseRenderer {
   getSituations(element) {
 
     const businessObject = getBusinessObject(element);
-  
+
     const { situations } = businessObject;
 
     return situations;
@@ -234,16 +237,16 @@ export default class CustomRenderer extends BaseRenderer {
         width: 100
       }
     }, options);
-  
+
     var text = this.textRenderer.createText(label || '', options);
-  
+
     svgClasses(text).add('djs-label');
-  
+
     svgAppend(parentGfx, text);
-  
+
     return text;
   }
-  
+
   renderEmbeddedLabel(parentGfx, element, align) {
     console.log(element.situationscopename);
     var semantic = getBusinessObject(element);
@@ -256,8 +259,8 @@ export default class CustomRenderer extends BaseRenderer {
       }
     });
   }
-  
-    
+
+
 
 
 

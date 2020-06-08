@@ -1,5 +1,4 @@
 'use strict';
-import ModelTransformer from '../custom/ModelTransformer';
 module.exports = function(electronApp, menuState) {
   return [{
     label: 'Open BPMN Reference',
